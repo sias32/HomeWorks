@@ -35,14 +35,14 @@ public static class HomeWork_05
         Console.WriteLine("Реализация всех методов IRobot через класс Robot\n");
         Robot bot1 = new Robot();
         Console.WriteLine("GetRobotType: " + bot1.GetRobotType());
-        Console.WriteLine("GetComponents: " + bot1.GetComponents()[bot1.GetComponents().Count - 1]);
+        Console.WriteLine("GetComponents: " + String.Join(" ", bot1.GetComponents()));
         Console.WriteLine("GetInfo: " + bot1.GetInfo());
         Console.WriteLine();
 
         Console.WriteLine("Реализация всех методов IFlyingRobot через класс FlyingRobot\n");
         FlyingRobot bot2 = new FlyingRobot();
         Console.WriteLine("GetRobotType: " + bot2.GetRobotType());
-        Console.WriteLine("GetComponents: " + bot2.GetComponents()[bot1.GetComponents().Count - 1]);
+        Console.WriteLine("GetComponents: " + String.Join(" ", bot2.GetComponents()));
         Console.WriteLine("GetInfo: " + bot2.GetInfo());
         Console.WriteLine();
 
