@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\09_Events"
   ],
+  "SelectedNode": "\\09_Events\\ImageDownloader.cs",
   "PreviewInSolutionExplorer": false
 }
