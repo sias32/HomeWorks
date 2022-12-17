@@ -11,8 +11,8 @@ internal class OtusDictionaryItem
 
     internal OtusDictionaryItem(int key, string value)
     {
-        this.key = key;
-        this.value = value;
+        this.Key = key;
+        this.Value = value;
     }
 }
 
