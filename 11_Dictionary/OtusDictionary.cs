@@ -1,4 +1,6 @@
-﻿namespace Dictionary;
+﻿using System.Drawing;
+
+namespace ConsoleNET7;
 
 /// <summary>
 /// Переменная, для хранения ключа и значеия
@@ -24,16 +26,16 @@ internal class OtusDictionary
     
     private OtusDictionaryItem[] Book;
 
-    private int _size;
+    private int _size = 32;
 
-    public int length => _size;
+    public int Size => _size;
 
     /// <summary>
     /// Индексирование, позволяет заменить методы Add и Get
     /// </summary>
     /// <param name="i"></param>
     /// <returns>Объект OtusDictionaryItem</returns>
-    public OtusDictionaryItem this[int i]
+    public string this[int i]
     {
         get
         {
@@ -41,42 +43,13 @@ internal class OtusDictionary
         }
         set 
         {
-            Add(value.key, value.value);
+            Add(i, value);
         }
     }
 
     internal OtusDictionary()
     {
-        Book = new OtusDictionaryItem[32];
-        _size = Book.Length;
-    }
-
-    /// <summary>
-    /// Метод расширающий массив в два раза, в случаи нахождений коллизии
-    /// </summary>
-    /// <param name="key">ключ</param>
-    /// <param name="value">значение</param>
-    private void ReSize(int key, string value)
-    {
-        OtusDictionaryItem[] tempBook = new OtusDictionaryItem[_size * 2];
-
-        int tempSize = tempBook.Length;
-
-        foreach (var dictionaryItem in Book)
-        {
-            if (dictionaryItem is not null)
-            {
-                int itemIndex = dictionaryItem.key % tempSize;
-
-                tempBook[itemIndex] = dictionaryItem;
-            }
-        }
-
-        Book = tempBook;
-        _size = tempSize;
-
-        // Метод добавления вынесен сюда, чтобы алгоритм увеличивал массив до тех пор, пока индекс не станет уникальным
-        Add(key, value);
+        Book = new OtusDictionaryItem[_size];
     }
 
     /// <summary>
@@ -94,7 +67,7 @@ internal class OtusDictionary
 
         OtusDictionaryItem item = new(key, value);
 
-        int index = key % _size;
+        int index = Hash(key, _size);
 
         // Проверка коллизии
         if (Book[index] is null)
@@ -102,9 +75,9 @@ internal class OtusDictionary
             Book[index] = item;
         }
         // В случае совпадения ключа, перезаписывает значение
-        else if (Book[index].key == item.key)
+        else if (Book[index].Key == item.Key)
         {
-            Book[index].value = value;
+            Book[index].Value = value;
         }
         // Уходит в метод расширения массива
         else
@@ -118,9 +91,9 @@ internal class OtusDictionary
     /// </summary>
     /// <param name="key">ключ</param>
     /// <returns>Значение</returns>
-    internal OtusDictionaryItem Get(int key)
+    internal string Get(int key)
     {
-        int index = key % _size;
+        int index = Hash(key, _size);
 
         if (Book[index] is null)
         {
@@ -128,7 +101,46 @@ internal class OtusDictionary
         }
         else
         {
-            return Book[index];
+            return Book[index].Value;
         }
+    }
+
+    /// <summary>
+    /// Метод расширающий массив в два раза, в случаи нахождений коллизии
+    /// </summary>
+    /// <param name="key">ключ</param>
+    /// <param name="value">значение</param>
+    private void ReSize(int key, string value)
+    {
+        OtusDictionaryItem[] tempBook = new OtusDictionaryItem[_size * 2];
+
+        int tempSize = tempBook.Length;
+
+        foreach (var dictionaryItem in Book)
+        {
+            if (dictionaryItem is not null)
+            {
+                int itemIndex = Hash(dictionaryItem.Key, tempSize);
+
+                tempBook[itemIndex] = dictionaryItem;
+            }
+        }
+
+        Book = tempBook;
+        _size = tempSize;
+
+        // Метод добавления внесен сюда, чтобы алгоритм увеличивал массив до тех пор, пока индекс не станет уникальным
+        Add(key, value);
+    }
+
+    /// <summary>
+    /// Метод индексирования по ключу
+    /// </summary>
+    /// <param name="key">ключ</param>
+    /// <param name="size">размер славаря</param>
+    /// <returns>индекс</returns>
+    private int Hash(int key, int size)
+    {
+        return (key.GetHashCode() & 0x7ffffff) % size;
     }
 }

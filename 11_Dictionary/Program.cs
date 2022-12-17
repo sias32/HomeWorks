@@ -1,4 +1,4 @@
-﻿namespace Dictionary;
+﻿namespace ConsoleNET7;
 
 internal class Program
 {
@@ -27,22 +27,22 @@ internal class Program
             Console.WriteLine(" Ключ 23213: " + dictionary.Get(23213));
 
             // Передадим ключ, который есть в словаре
-            Console.WriteLine(" Ключ 200: " + dictionary.Get(200).value);
+            Console.WriteLine("Ключ 200: " + dictionary.Get(200));
 
             // Вместо методов Add и Get можно обращаться к массиву через индекс, он равен ключу
 
             // Поскольку такой ключ уже есть, то произойдет замена значения
-            dictionary[200] = new OtusDictionaryItem(200, "еще одна новая строка");
+            dictionary[200] = "еще одна новая строка";
 
-            // Выдаст значение по индексу 200
-            Console.WriteLine("Обращение по индексу 200:" + dictionary[200].value);
+            // Выдаст новое значение по индексу 200
+            Console.WriteLine("Обращение по индексу 200: " + dictionary[200]);
 
             // Вывод
-            for (int i = 0; i < dictionary.length; i++)
+            for (int i = 0; i < dictionary.Size; i++)
             {
                 if (dictionary[i] != null)
                 {
-                    Console.WriteLine($"Итем: {i} - {dictionary[i].key} - {dictionary[i].value}");
+                    Console.WriteLine($"Итем: {i} - {dictionary[i]}");
                 }
                 else
                 {
@@ -55,10 +55,6 @@ internal class Program
             // Если передать пустую или null строку
             //dictionary.Add(192, null);
             //dictionary.Add(192, "");
-
-            // Если обратиться по несуществующему индексу
-            Console.WriteLine(dictionary[241512]);
-            //dictionary[2415112] = new OtusDictionaryItem(3123, "value");
         }
         catch (Exception e)
         {
