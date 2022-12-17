@@ -5,9 +5,9 @@
 /// </summary>
 internal class OtusDictionaryItem
 {
-    public int key;
+    public int Key;
 
-    public string value;
+    public string Value;
 
     internal OtusDictionaryItem(int key, string value)
     {
