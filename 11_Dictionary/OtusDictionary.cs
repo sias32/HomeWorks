@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+=﻿using System.Drawing;
 
 namespace ConsoleNET7;
 
@@ -141,6 +141,6 @@ internal class OtusDictionary
     /// <returns>индекс</returns>
     private int Hash(int key, int size)
     {
-        return (key.GetHashCode() & 0x7ffffff) % size;
+        return (key & 0x7ffffff) % size;
     }
 }
